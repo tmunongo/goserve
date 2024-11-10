@@ -7,7 +7,7 @@ import (
 
 func TestServerInterface(t *testing.T) {
 	var _ Server = &TCPServer{}
-	// var _ Server = &UDPServer{}
+	var _ Server = &UDPServer{}
 }
 
 type mockHandler struct {
