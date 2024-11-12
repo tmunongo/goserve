@@ -21,6 +21,37 @@ func (m *mockHandler) Handle(data []byte) error {
 	return nil
 }
 
+func TestServerCreate(t *testing.T) {
+	handler := &mockHandler{}
+	tcpServer := NewTCPServer("localhost", 8080, handler)
+
+	if tcpServer.config.Host != "localhost" {
+		t.Error("Host does not match")
+	}
+
+	if tcpServer.config.Port != 8080 {
+		t.Error("Port does not match")
+	}
+
+	if tcpServer.IsRunning() != false {
+		t.Error("Server has not been started. Should not be running")
+	}
+
+	udpServer := NewUDPServer("127.0.0.1", 4040, handler)
+
+	if udpServer.config.Host != "127.0.0.1" {
+		t.Error("Host does not match")
+	}
+
+	if udpServer.config.Port != 4040 {
+		t.Error("Port does not match")
+	}
+
+	if udpServer.IsRunning() != false {
+		t.Error("Server has not been started. Should not be running")
+	}
+}
+
 func TestServerLifecycle(t *testing.T) {
 	handler := &mockHandler{}
 	server := NewTCPServer("localhost", 8080, handler)
